@@ -1,2 +1,2 @@
 # Papers
-Paper implementations
+Paper implementations, mostly using JAX+flax
