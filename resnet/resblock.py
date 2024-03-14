@@ -8,16 +8,16 @@ class ResBlock(nn.Module):
     act: nn.Module = nn.relu
     project: nn.Module = nn.Dense
     bn: nn.Module = nn.BatchNorm
-    use_bias: bool = False
+    use_bias: bool = True
     
     @nn.compact
     def __call__(self, x,):
         residual = x
         x = self.conv(self.features, (3, 3), (1, 1), padding='SAME', use_bias=self.use_bias)(x)
-        x = self.bn(use_running_average=False)(x)
+        x = self.bn(use_running_average=True)(x)
         x = self.act(x)
         x = self.conv(self.features, (3, 3), (1, 1), padding='SAME', use_bias=self.use_bias)(x)
-        x = self.bn(use_running_average=False)(x)
+        x = self.bn(use_running_average=True)(x)
         x = x + self.project(self.features)(residual) 
         x = self.act(x)
         return x
